@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="next(true)">
+    <!-- <div id="loading">
+        Loading ....
+    </div> -->
+     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <div class="card" hidden>
+        <div class="profile">
+        <img id="profileImg" alt="image">
+        <h3 id="fname"></h3>
+        <p id="bio"></p>
+        <span><a id="gitLink">Github</a></span>
+        <span><a href="https://twitter.com/imcj29?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @imcj29</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></span>
+        </div>
+
+        <div class="repo">
+            <h3>My Projects</h3>
+            <ul>
+            <span id="repos"></span>
+            </ul>
+            <button onclick="next(false)">Pre</button>
+            <button onclick="next(true)">Next</button>
+
+            
+        </div>
+        
+    </div>
+
+    <script>
+        fetch("https://api.github.com/users/sijanghm")
+        .then(response=>response.json())
+        .then(function(data){
+            console.log(data);
+            document.getElementById('profileImg').src = data['avatar_url'];
+            document.getElementById('fname').textContent = data['name'];
+            document.getElementById('bio').textContent = data['bio'];
+            document.getElementById('gitLink').href = data['html_url'];
+
+            
+        })
+
+    </script>
+    
+
+
+<script>
+	var pagenumber=0;
+     function next(next)
+     {
+     	if(next==true)
+             {
+             pagenumber = pagenumber+1;
+     		}
+     		else
+     		{
+             pagenumber = pagenumber-1;
+     		}
+     	document.getElementById('repos').innerHTML="";
+     	$.ajax({
+      url: 'https://api.github.com/users/sijanghm/repos?page='+pagenumber+'&per_page=5',
+      type: "get",
+      dataType: "json",
+  
+      success: function(data) {
+          getData(data);
+      }
+    });
+  
+  function getData(data) {
+      for (var j = 0; j < data.length; j++) {
+          divLoop(data[j],j);
+      }
+  }
+
+  
+  
+  function divLoop(rowData,j) {
+    var reposHTML = document.getElementById('repos').innerHTML;
+      reposHTML+=`<li class="lis"><a href="`+rowData.html_url+`">`+rowData.name+`</a></li><hr>`;
+         document.getElementById('repos').innerHTML = reposHTML;
+      }
+
+     }
+  
+  </script>
+</body>
+</html>
