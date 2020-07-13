@@ -1,14 +1,3 @@
- fetch("https://api.github.com/users/sijanghm")
-        .then(response=>response.json())
-        .then(function(data){
-            console.log(data);
-            document.getElementById('profileImg').src = data['avatar_url'];
-            document.getElementById('fname').textContent = data['name'];
-            document.getElementById('bio').textContent = data['bio'];
-            document.getElementById('gitLink').href = data['html_url'];
-
-        })
-
 
 var pagenumber=0;
      function next(next)

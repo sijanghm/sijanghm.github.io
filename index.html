@@ -32,6 +32,29 @@
         </div>
         
     </div>
+ <script>
+        fetch("https://api.github.com/users/sijanghm")
+        .then(response=>response.json())
+        .then(function(data){
+            console.log(data);
+            document.getElementById('profileImg').src = data['avatar_url'];
+            document.getElementById('fname').textContent = data['name'];
+            document.getElementById('bio').textContent = data['bio'];
+            document.getElementById('gitLink').href = data['html_url'];
+
+            // document.getElementsByClassName('card').hidden = false;
+            // document.getElementById('loading').hidden = true;
+        })
+
+        
+        // fetch("https://api.github.com/users/sijanghm/repos")
+        // .then(response=>response.json())
+        // .then(function(data){
+        //     //console.log(data[4]);
+        //     document.getElementsByClassName('repos').textContent = data[];
+            
+        // })
+    </script>
 
     <script src="app.js">
        
